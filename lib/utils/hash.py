@@ -122,6 +122,24 @@ def postgres_passwd(password, username, uppercase=False):
 
     return retVal.upper() if uppercase else retVal.lower()
 
+def mssql_2012_passwd(password, salt, uppercase=False):
+    """
+    Reference(s):
+        http://www.leidecker.info/projects/phrasendrescher/mssql.c
+        https://www.evilfingers.com/tools/GSAuditor.php
+
+    >>> mssql_passwd(password='testpass', salt='4086ceb6', uppercase=False)
+    '0x01004086ceb60c90646a8ab9889fe3ed8e5c150b5460ece8425a'
+    """
+
+    binsalt = hexdecode(salt)
+    unistr = "".join(map(lambda c: ("%s\0" if ord(c) < 256 else "%s") % utf8encode(c), password))
+
+    retVal = "0200%s%s" % (salt, sha512(unistr + binsalt).hexdigest())
+
+    return "0x%s" % (retVal.upper() if uppercase else retVal.lower())
+
+
 def mssql_passwd(password, salt, uppercase=False):
     """
     Reference(s):
@@ -324,6 +342,7 @@ __functions__ = {
                     HASH.MYSQL_OLD: mysql_old_passwd,
                     HASH.POSTGRES: postgres_passwd,
                     HASH.MSSQL: mssql_passwd,
+                    HASH.MSSQL_2012: mssql_2012_passwd,
                     HASH.MSSQL_OLD: mssql_old_passwd,
                     HASH.ORACLE: oracle_passwd,
                     HASH.ORACLE_OLD: oracle_old_passwd,

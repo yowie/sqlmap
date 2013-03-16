@@ -101,6 +101,7 @@ class HASH:
     MYSQL = r'(?i)\A\*[0-9a-f]{40}\Z'
     MYSQL_OLD = r'(?i)\A(?![0-9]+\Z)[0-9a-f]{16}\Z'
     POSTGRES = r'(?i)\Amd5[0-9a-f]{32}\Z'
+    MSSQL_2012 = r'(?i)\A0x0200[0-9a-f]{8}[0-9a-f]{64}\Z'
     MSSQL = r'(?i)\A0x0100[0-9a-f]{8}[0-9a-f]{40}\Z'
     MSSQL_OLD = r'(?i)\A0x0100[0-9a-f]{8}[0-9a-f]{80}\Z'
     ORACLE = r'(?i)\As:[0-9a-f]{60}\Z'
