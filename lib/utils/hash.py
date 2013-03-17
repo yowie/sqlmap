@@ -689,7 +689,7 @@ def dictionaryAttack(attack_dict):
                         item = [(user, hash_), {'username': user}]
                     elif hash_regex in (HASH.ORACLE):
                         item = [(user, hash_), {'salt': hash_[-20:]}]
-                    elif hash_regex in (HASH.MSSQL, HASH.MSSQL_OLD):
+                    elif hash_regex in (HASH.MSSQL_2012, HASH.MSSQL, HASH.MSSQL_OLD):
                         item = [(user, hash_), {'salt': hash_[6:14]}]
                     elif hash_regex in (HASH.CRYPT_GENERIC):
                         item = [(user, hash_), {'salt': hash_[0:2]}]
